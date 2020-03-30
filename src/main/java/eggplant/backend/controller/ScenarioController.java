@@ -1,0 +1,78 @@
+package eggplant.backend.controller;
+
+import eggplant.backend.dto.scenario.CreateScenarioRequest;
+import eggplant.backend.dto.scenario.UpdateScenarioParams;
+import eggplant.backend.dto.scenario.UpdateScenarioRequest;
+import eggplant.backend.model.Scenario;
+import eggplant.backend.service.ScenarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+public class ScenarioController {
+
+    // Todo ajouter des informations sur tous le dataset (répartitions erreur, entrées)
+
+    static final String basePath = "scenario";
+
+    static final private int pageSize = 50;
+
+    @Autowired
+    private ScenarioService scenarioService;
+
+    @GetMapping(value = basePath)
+    public List<Scenario> getAllScenario(
+            @RequestParam(value = "page", defaultValue = "0") Integer page
+    ) {
+        Page<Scenario> scenarioPage = scenarioService.getScenarioPage(page, pageSize);
+        return  scenarioPage.toList();
+    }
+
+    @GetMapping(value = basePath + "/{id}")
+    public Scenario findById(
+            @PathVariable String id
+    ) {
+        return scenarioService.getScenarioById(id);
+    }
+
+    @GetMapping(value = basePath + "/dataset")
+    public List<Scenario> getDataset(
+            @RequestParam(value = "page", defaultValue = "0") Integer page
+    ) {
+        Slice<Scenario> scenarios = scenarioService.getDataset(page, pageSize);
+        return scenarios.getContent();
+    }
+
+    @PatchMapping(value = basePath + "/dataset/{id}")
+    @ResponseBody
+    public Scenario changeScenarioDatasetStatus(
+            @PathVariable String id
+    ) {
+        return scenarioService.changeScenarioStatus(id);
+    }
+
+    @PatchMapping(value = basePath)
+    @ResponseBody
+    public Scenario updateScenario(
+            @RequestBody UpdateScenarioRequest request
+    ) {
+        UpdateScenarioParams params = new UpdateScenarioParams(
+                request.getId(),
+                Optional.of(request.getTrainingLabel()),
+                Optional.of(request.getCorrectionAction())
+        );
+        return scenarioService.updateScenario(params);
+    }
+
+    @PostMapping(value = basePath)
+    public Scenario createScenario(
+            @RequestBody CreateScenarioRequest request
+    ) {
+        return scenarioService.createScenario(request);
+    }
+}
