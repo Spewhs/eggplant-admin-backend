@@ -68,6 +68,9 @@ public class ScenarioServiceImpl implements ScenarioService {
         params.getTrainingLabel()
                 .ifPresent(scenarioToUpdate::setTrainingLabel);
 
+        params.getUsedInDataset()
+                .ifPresent(scenarioToUpdate::setUsedInDataset);
+
         scenarioRepository.save(scenarioToUpdate);
         return scenarioToUpdate;
     }

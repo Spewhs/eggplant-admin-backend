@@ -64,7 +64,8 @@ public class ScenarioController {
         UpdateScenarioParams params = new UpdateScenarioParams(
                 request.getId(),
                 Optional.of(request.getTrainingLabel()),
-                Optional.of(request.getCorrectionAction())
+                Optional.of(request.getCorrectionAction()),
+                Optional.of(request.getUsedInDataset())
         );
         return scenarioService.updateScenario(params);
     }

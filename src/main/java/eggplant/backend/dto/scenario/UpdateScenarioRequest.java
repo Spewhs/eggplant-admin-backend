@@ -8,17 +8,21 @@ public class UpdateScenarioRequest {
 
     private String correctionAction;
 
+    private Boolean usedInDataset;
+
     public UpdateScenarioRequest() {
     }
 
     public UpdateScenarioRequest(
             String id,
             String trainingLabel,
-            String correctionAction
+            String correctionAction,
+            Boolean usedInDataset
     ) {
         this.id = id;
         this.trainingLabel = trainingLabel;
         this.correctionAction = correctionAction;
+        this.usedInDataset = usedInDataset;
     }
 
     public String getId() {
@@ -43,5 +47,13 @@ public class UpdateScenarioRequest {
 
     public void setCorrectionAction(String correctionAction) {
         this.correctionAction = correctionAction;
+    }
+
+    public Boolean getUsedInDataset() {
+        return usedInDataset;
+    }
+
+    public void setUsedInDataset(Boolean usedInDataset) {
+        this.usedInDataset = usedInDataset;
     }
 }
