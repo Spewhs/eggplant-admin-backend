@@ -1,5 +1,6 @@
 package eggplant.backend.controller;
 
+import eggplant.backend.dto.ObjectPage;
 import eggplant.backend.dto.scenario.CreateScenarioRequest;
 import eggplant.backend.dto.scenario.UpdateScenarioParams;
 import eggplant.backend.dto.scenario.UpdateScenarioRequest;
@@ -26,11 +27,14 @@ public class ScenarioController {
     private ScenarioService scenarioService;
 
     @GetMapping(value = basePath)
-    public List<Scenario> getAllScenario(
+    public ObjectPage<Scenario> getAllScenario(
             @RequestParam(value = "page", defaultValue = "0") Integer page
     ) {
         Page<Scenario> scenarioPage = scenarioService.getScenarioPage(page, pageSize);
-        return  scenarioPage.toList();
+        return new ObjectPage<>(
+                scenarioPage.toList(),
+                (int) scenarioPage.getTotalElements()
+        );
     }
 
     @GetMapping(value = basePath + "/{id}")

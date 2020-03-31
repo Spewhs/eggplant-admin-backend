@@ -1,5 +1,6 @@
 package eggplant.backend.controller;
 
+import eggplant.backend.dto.ObjectPage;
 import eggplant.backend.dto.ResponseObjectId;
 import eggplant.backend.dto.classifier.UpdateClassifierParams;
 import eggplant.backend.dto.classifier.UpdateClassifierRequest;
@@ -25,11 +26,14 @@ public class ClassifierController {
     private ClassifierService classifierService;
 
     @GetMapping(value = basePath)
-    public List<Classifier> getClassifier(
+    public ObjectPage<Classifier> getClassifier(
             @RequestParam(value = "page", defaultValue = "0") Integer page
             ) {
         Page<Classifier> classifierPage = classifierService.getClassifierPage(page, pageSize);
-        return classifierPage.toList();
+        return new ObjectPage<>(
+                classifierPage.toList(),
+                (int) classifierPage.getTotalElements()
+        );
     }
 
     @GetMapping(value = basePath + "/version/{version}")
