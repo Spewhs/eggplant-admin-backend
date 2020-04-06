@@ -1,8 +1,11 @@
 package eggplant.backend.dto.classifier;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UpdateClassifierRequest {
 
     @NotNull

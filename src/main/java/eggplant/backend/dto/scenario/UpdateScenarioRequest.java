@@ -1,5 +1,8 @@
 package eggplant.backend.dto.scenario;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UpdateScenarioRequest {
 
     private String id;

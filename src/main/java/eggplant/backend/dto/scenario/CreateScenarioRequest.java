@@ -1,7 +1,10 @@
 package eggplant.backend.dto.scenario;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.NotNull;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateScenarioRequest {
 
     @NotNull
@@ -21,6 +24,9 @@ public class CreateScenarioRequest {
 
     @NotNull
     private String failStepKeyWord;
+
+    public CreateScenarioRequest() {
+    }
 
     public CreateScenarioRequest(
             String zucchiniId,
