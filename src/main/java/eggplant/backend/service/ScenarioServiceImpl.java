@@ -30,6 +30,11 @@ public class ScenarioServiceImpl implements ScenarioService {
 
     @Override
     public Scenario getScenarioById(String id) {
+        return scenarioRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Scenario getScenarioByZucchiniId(String id) {
         return scenarioRepository.findByZucchiniId(id);
     }
 

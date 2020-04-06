@@ -13,6 +13,8 @@ public interface ScenarioService {
 
     Scenario getScenarioById(String id);
 
+    Scenario getScenarioByZucchiniId(String id);
+
     Slice<Scenario> getDataset(Integer page, Integer pageSize);
 
     Scenario createScenario(CreateScenarioRequest params);
