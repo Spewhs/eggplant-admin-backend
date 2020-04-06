@@ -3,6 +3,8 @@ FROM gradle:6.2.2-jdk11 as builder
 
 COPY --chown=gradle:gradle . /home/gradle/src
 
+COPY application.properties.docker src/main/resources/application.properties
+
 WORKDIR /home/gradle/src
 
 RUN gradle build --no-daemon
