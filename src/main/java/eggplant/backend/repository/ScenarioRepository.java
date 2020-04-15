@@ -5,10 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
+import java.util.Optional;
 
 public interface ScenarioRepository extends MongoRepository<Scenario, String> {
 
-    Scenario findByZucchiniId(String zucchiniId);
+    Optional<Scenario> findByZucchiniId(String zucchiniId);
 
     List<Scenario> findByTrainingLabel(String trainingLabel, Pageable pageable);
 

@@ -7,7 +7,6 @@ import eggplant.backend.model.Scenario;
 import eggplant.backend.service.ScenarioService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +18,6 @@ public class ScenarioProducer {
     @Autowired
     private ScenarioService scenarioService;
 
-    //@Scheduled(fixedRate=15000)
     private void sendNewScenario() {
         System.out.println("Send new message");
         System.out.println();
@@ -33,7 +31,7 @@ public class ScenarioProducer {
             return;
         }
         rabbitTemplate.convertAndSend(
-                RabbitMqConfiguration.EXCHANGE_NAME,
+                RabbitMqConfiguration.ZUCCHINI_INCOMING_EXCHANGE,
                 "scenario",
                 message
         );

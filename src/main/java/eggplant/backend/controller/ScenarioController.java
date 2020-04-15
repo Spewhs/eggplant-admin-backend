@@ -1,6 +1,7 @@
 package eggplant.backend.controller;
 
 import eggplant.backend.dto.ObjectPage;
+import eggplant.backend.dto.scenario.CreateScenarioParams;
 import eggplant.backend.dto.scenario.CreateScenarioRequest;
 import eggplant.backend.dto.scenario.UpdateScenarioParams;
 import eggplant.backend.dto.scenario.UpdateScenarioRequest;
@@ -71,13 +72,21 @@ public class ScenarioController {
                 Optional.of(request.getCorrectionAction()),
                 Optional.of(request.getUsedInDataset())
         );
-        return scenarioService.updateScenario(params);
+        return scenarioService.updateScenarioWithId(params);
     }
 
     @PostMapping(value = basePath)
     public Scenario createScenario(
             @RequestBody CreateScenarioRequest request
     ) {
-        return scenarioService.createScenario(request);
+        CreateScenarioParams params = new CreateScenarioParams(
+                request.getZucchiniId(),
+                request.getTrace(),
+                Optional.of(request.getTrainingLabel()),
+                Optional.of(request.getCorrectionAction()),
+                request.getScenarioKey(),
+                request.getFailStepKeyWord()
+        );
+        return scenarioService.createScenario(params);
     }
 }

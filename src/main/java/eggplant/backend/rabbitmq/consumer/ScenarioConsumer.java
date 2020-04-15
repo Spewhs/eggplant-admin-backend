@@ -2,14 +2,15 @@ package eggplant.backend.rabbitmq.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eggplant.backend.dto.scenario.CreateScenarioRequest;
+import eggplant.backend.dto.scenario.CreateScenarioParams;
 import eggplant.backend.dto.scenario.UpdateScenarioParams;
+import eggplant.backend.dto.zucchini.ZucchiniScenario;
 import eggplant.backend.model.Scenario;
+import eggplant.backend.rabbitmq.producer.EggplantAdministrationProducer;
 import eggplant.backend.service.ScenarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 
@@ -19,59 +20,66 @@ public class ScenarioConsumer {
     @Autowired
     private ScenarioService scenarioService;
 
-    public void receiveMessage(String message) {
-        HashMap<String, Object> scenario;
+    @Autowired
+    private EggplantAdministrationProducer eggplantAdministrationProducer;
+
+    public void receiveMessage(byte[] message) {
+        ZucchiniScenario scenario;
         try {
-            scenario = new ObjectMapper().readValue(message, HashMap.class);
+            scenario = new ObjectMapper().readValue(new String(message), ZucchiniScenario.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return;
         }
         System.out.println("New incoming message");
-        if (scenario.containsKey("trainingLabel") && !scenario.get("trainingLabel").equals("")) {
-            addOrUpdateToDataset(scenario);
-        } else {
+        if (scenario.getTrainingLabel() == null || scenario.getTrainingLabel().equals("")) {
             makeAPrediction(scenario);
+        } else {
+            addOrUpdateToDataset(scenario);
         }
-        System.out.println();
     }
 
-    private void makeAPrediction(HashMap<String, Object> scenario) {
+    private void makeAPrediction(ZucchiniScenario scenarioJson) {
         System.out.println("Making prediction for new object");
-    }
-
-    private void addOrUpdateToDataset(HashMap<String, Object> entry) {
-        if (entry.containsKey("id")) {
-            Scenario scenario = scenarioService.getScenarioById(entry.get("id") + "");
-            if (scenario != null) {
-                updateExistingScenario(entry);
-                return;
-            }
+        Scenario scenario = createNewScenario(scenarioJson);
+        try {
+            eggplantAdministrationProducer.submitPrediction(scenario);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-        createNewScenario(entry);
     }
 
-    private void updateExistingScenario(HashMap<String, Object> entry) {
+    private void addOrUpdateToDataset(ZucchiniScenario entry) {
+        Scenario scenario = scenarioService.getScenarioByZucchiniId(entry.getId());
+        if (scenario == null) {
+            createNewScenario(entry);
+        } else {
+            updateExistingScenario(entry);
+        }
+    }
+
+    private void updateExistingScenario(ZucchiniScenario entry) {
         System.out.println("Updating existing scenario");
+        boolean usedInDataset = entry.getTrainingLabel() != null;
         UpdateScenarioParams updateScenario = new UpdateScenarioParams(
-                entry.get("id").toString(),
-                Optional.of(entry.get("trainingLabel").toString()),
-                Optional.of(entry.get("correctionAction").toString()),
-                Optional.of(Boolean.valueOf(entry.get("usedInDataset").toString()))
+                entry.getId(),
+                Optional.of(entry.getTrainingLabel()),
+                Optional.of(entry.getCorrectionAction()),
+                Optional.of(usedInDataset)
         );
-        scenarioService.updateScenario(updateScenario);
+        scenarioService.updateScenarioWithZucchiniId(updateScenario);
     }
 
-    private void createNewScenario(HashMap<String, Object> entry) {
+    private Scenario createNewScenario(ZucchiniScenario entry) {
         System.out.println("Adding new entry to dataset");
-        CreateScenarioRequest newScenario = new CreateScenarioRequest(
-                entry.get("zucchiniId").toString(),
-                entry.get("trace").toString(),
-                entry.get("trainingLabel").toString(),
-                entry.get("correctionAction").toString(),
-                entry.get("scenarioKey").toString(),
-                entry.get("failStepKeyWord").toString()
+        CreateScenarioParams newScenario = new CreateScenarioParams(
+                entry.getId(),
+                entry.getTrace(),
+                Optional.ofNullable(entry.getTrainingLabel()),
+                Optional.ofNullable(entry.getCorrectionAction()),
+                entry.getScenarioKey(),
+                entry.getFailStepKeyWord()
         );
-        scenarioService.createScenario(newScenario);
+        return scenarioService.createScenario(newScenario);
     }
 }

@@ -1,31 +1,26 @@
 package eggplant.backend.dto.scenario;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Optional;
 
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateScenarioRequest {
+public class CreateScenarioParams {
 
     private String zucchiniId;
 
     private String trace;
 
-    private String trainingLabel;
+    private Optional<String> trainingLabel;
 
-    private String correctionAction;
+    private Optional<String> correctionAction;
 
     private String scenarioKey;
 
     private String failStepKeyWord;
 
-    public CreateScenarioRequest() {
-    }
-
-    public CreateScenarioRequest(
+    public CreateScenarioParams(
             String zucchiniId,
             String trace,
-            String trainingLabel,
-            String correctionAction,
+            Optional<String> trainingLabel,
+            Optional<String> correctionAction,
             String scenarioKey,
             String failStepKeyWord
     ) {
@@ -53,19 +48,19 @@ public class CreateScenarioRequest {
         this.trace = trace;
     }
 
-    public String getTrainingLabel() {
+    public Optional<String> getTrainingLabel() {
         return trainingLabel;
     }
 
-    public void setTrainingLabel(String trainingLabel) {
+    public void setTrainingLabel(Optional<String> trainingLabel) {
         this.trainingLabel = trainingLabel;
     }
 
-    public String getCorrectionAction() {
+    public Optional<String> getCorrectionAction() {
         return correctionAction;
     }
 
-    public void setCorrectionAction(String correctionAction) {
+    public void setCorrectionAction(Optional<String> correctionAction) {
         this.correctionAction = correctionAction;
     }
 

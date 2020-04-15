@@ -115,6 +115,10 @@ public class Scenario {
     }
 
     public void setUsedInDataset(boolean usedInDataset) {
+        if (trainingLabel == null) {
+            usedInDataset = false;
+            return;
+        }
         this.usedInDataset = usedInDataset;
     }
 

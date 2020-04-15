@@ -1,5 +1,6 @@
 package eggplant.backend.service;
 
+import eggplant.backend.dto.scenario.CreateScenarioParams;
 import eggplant.backend.dto.scenario.CreateScenarioRequest;
 import eggplant.backend.dto.scenario.UpdateScenarioParams;
 import eggplant.backend.exception.NoDocument;
@@ -35,7 +36,8 @@ public class ScenarioServiceImpl implements ScenarioService {
 
     @Override
     public Scenario getScenarioByZucchiniId(String id) {
-        return scenarioRepository.findByZucchiniId(id);
+        return scenarioRepository.findByZucchiniId(id)
+                .orElseThrow(NoDocument::new);
     }
 
     @Override
@@ -46,27 +48,38 @@ public class ScenarioServiceImpl implements ScenarioService {
     }
 
     @Override
-    public Scenario createScenario(CreateScenarioRequest params) {
-        ZonedDateTime createdAt = ZonedDateTime.now(ZoneOffset.UTC);
+    public Scenario createScenario(CreateScenarioParams params) {
         Scenario scenario = new Scenario(
                 params.getZucchiniId(),
                 params.getTrace(),
-                params.getTrainingLabel(),
-                params.getCorrectionAction(),
+                params.getTrainingLabel().orElse(""),
+                params.getCorrectionAction().orElse(""),
                 params.getScenarioKey(),
                 params.getFailStepKeyWord(),
-                createdAt,
-                true
+                ZonedDateTime.now(ZoneOffset.UTC),
+                params.getTrainingLabel().isPresent()
         );
         scenarioRepository.insert(scenario);
         return scenario;
     }
 
     @Override
-    public Scenario updateScenario(UpdateScenarioParams params) {
+    public Scenario updateScenarioWithId(UpdateScenarioParams params) {
         Scenario scenarioToUpdate = scenarioRepository.findById(params.getId())
                 .orElseThrow(NoDocument::new);
 
+        return updateScenario(scenarioToUpdate, params);
+    }
+
+    @Override
+    public Scenario updateScenarioWithZucchiniId(UpdateScenarioParams params) {
+        Scenario scenarioToUpdate = scenarioRepository.findByZucchiniId(params.getId())
+                .orElseThrow(NoDocument::new);
+
+        return updateScenario(scenarioToUpdate, params);
+    }
+
+    private Scenario updateScenario(Scenario scenarioToUpdate, UpdateScenarioParams params) {
         params.getCorrectionAction()
                 .ifPresent(scenarioToUpdate::setCorrectionAction);
 

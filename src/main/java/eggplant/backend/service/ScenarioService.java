@@ -1,5 +1,6 @@
 package eggplant.backend.service;
 
+import eggplant.backend.dto.scenario.CreateScenarioParams;
 import eggplant.backend.dto.scenario.CreateScenarioRequest;
 import eggplant.backend.dto.scenario.UpdateScenarioParams;
 import eggplant.backend.model.DatasetStat;
@@ -17,9 +18,11 @@ public interface ScenarioService {
 
     Slice<Scenario> getDataset(Integer page, Integer pageSize);
 
-    Scenario createScenario(CreateScenarioRequest params);
+    Scenario createScenario(CreateScenarioParams params);
 
-    Scenario updateScenario(UpdateScenarioParams params);
+    Scenario updateScenarioWithId(UpdateScenarioParams params);
+
+    Scenario updateScenarioWithZucchiniId(UpdateScenarioParams params);
 
     Scenario changeScenarioStatus(String id);
 
