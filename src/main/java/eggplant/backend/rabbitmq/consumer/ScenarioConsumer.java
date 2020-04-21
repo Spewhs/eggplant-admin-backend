@@ -6,7 +6,7 @@ import eggplant.backend.dto.scenario.CreateScenarioParams;
 import eggplant.backend.dto.scenario.UpdateScenarioParams;
 import eggplant.backend.dto.zucchini.ZucchiniScenario;
 import eggplant.backend.model.Scenario;
-import eggplant.backend.rabbitmq.producer.EggplantAdministrationProducer;
+import eggplant.backend.rabbitmq.producer.EggplantPredictionProducer;
 import eggplant.backend.service.ScenarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class ScenarioConsumer {
     private ScenarioService scenarioService;
 
     @Autowired
-    private EggplantAdministrationProducer eggplantAdministrationProducer;
+    private EggplantPredictionProducer eggplantPredictionProducer;
 
     public void receiveMessage(byte[] message) {
         ZucchiniScenario scenario;
@@ -43,7 +43,7 @@ public class ScenarioConsumer {
         System.out.println("Making prediction for new object");
         Scenario scenario = createNewScenario(scenarioJson);
         try {
-            eggplantAdministrationProducer.submitPrediction(scenario);
+            eggplantPredictionProducer.submitPrediction(scenario);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

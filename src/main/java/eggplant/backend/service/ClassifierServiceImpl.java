@@ -102,6 +102,11 @@ public class ClassifierServiceImpl implements ClassifierService {
     }
 
     @Override
+    public Classifier getActiveClassifier() {
+        return classifierRepository.getClassifierByActiveClassifierIsTrue();
+    }
+
+    @Override
     public void deleteById(String id) {
         classifierRepository.deleteById(id);
     }

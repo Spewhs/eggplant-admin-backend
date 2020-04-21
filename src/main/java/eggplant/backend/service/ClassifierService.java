@@ -20,6 +20,8 @@ public interface ClassifierService {
 
     Classifier changeActiveClassifier(String id) throws CantActiveClassifier;
 
+    Classifier getActiveClassifier();
+
     void deleteById(String id);
 
     // TODO Add something to manage number of prediction
