@@ -15,6 +15,7 @@ public class PredictionConsumer {
     private PredictionInformationService predictionInformationService;
 
     public void receiveMessage(byte[] message) {
+        System.out.println("New incoming prediction");
         PredictionInformationParams predictionInformationParams;
 
         try {

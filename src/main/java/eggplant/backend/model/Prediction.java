@@ -7,6 +7,9 @@ public class Prediction {
 
     private float accuracy;
 
+    public Prediction() {
+    }
+
     public Prediction(
             String label,
             float accuracy

@@ -1,18 +1,26 @@
 package eggplant.backend.dto.prediction;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eggplant.backend.model.Prediction;
 
 import java.util.List;
 
 public class PredictionInformationParams {
 
+    @JsonProperty("prediction")
     private List<Prediction> predictions;
 
+    @JsonProperty("classifierId")
     private String classifierId;
 
+    @JsonProperty("zucchiniId")
     private String zucchiniId;
 
+    @JsonProperty("scenarioId")
     private String scenarioId;
+
+    public PredictionInformationParams() {
+    }
 
     public PredictionInformationParams(
             List<Prediction> predictions,

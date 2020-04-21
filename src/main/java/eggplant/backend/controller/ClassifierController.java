@@ -35,6 +35,11 @@ public class ClassifierController {
         );
     }
 
+    @PostMapping(value = basePath + "/train")
+    public void submitTraining(){
+        classifierService.submitNewTraining();
+    }
+
     @GetMapping(value = basePath + "/version/{version}")
     public Classifier getClassifierByVersion(
             @PathVariable String version

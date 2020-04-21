@@ -35,7 +35,8 @@ public class EggplantPredictionProducer {
                 scenario.getId(),
                 classifierId,
                 scenario.getTrace(),
-                scenario.getFailStepKeyWord()
+                scenario.getFailStepKeyWord(),
+                scenario.getZucchiniId()
         );
 
         rabbitTemplate.convertAndSend(

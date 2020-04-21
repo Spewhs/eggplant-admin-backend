@@ -10,16 +10,20 @@ public class SubmitPrediction {
 
     private String failStepKeyWord;
 
+    private String zucchiniId;
+
     public SubmitPrediction(
             String id,
             String classifierId,
             String trace,
-            String failStepKeyWord
+            String failStepKeyWord,
+            String zucchiniId
     ) {
         this.id = id;
         this.classifierId = classifierId;
         this.trace = trace;
         this.failStepKeyWord = failStepKeyWord;
+        this.zucchiniId = zucchiniId;
     }
 
     public String getId() {
@@ -52,5 +56,13 @@ public class SubmitPrediction {
 
     public void setFailStepKeyWord(String failStepKeyWord) {
         this.failStepKeyWord = failStepKeyWord;
+    }
+
+    public String getZucchiniId() {
+        return zucchiniId;
+    }
+
+    public void setZucchiniId(String zucchiniId) {
+        this.zucchiniId = zucchiniId;
     }
 }

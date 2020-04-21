@@ -2,6 +2,7 @@ package eggplant.backend.service;
 
 import eggplant.backend.dto.classifier.UpdateClassifierParams;
 import eggplant.backend.exception.NoDocument;
+import eggplant.backend.rabbitmq.producer.EggplantTrainingProducer;
 import eggplant.backend.repository.ClassifierRepository;
 import eggplant.backend.dto.classifier.CreateClassifierParams;
 import eggplant.backend.exception.CantActiveClassifier;
@@ -21,6 +22,9 @@ public class ClassifierServiceImpl implements ClassifierService {
 
     @Autowired
     private ClassifierRepository classifierRepository;
+
+    @Autowired
+    private EggplantTrainingProducer eggplantTrainingProducer;
 
     @Override
     public Page<Classifier> getClassifierPage(Integer page, Integer pageSize) {
@@ -104,6 +108,11 @@ public class ClassifierServiceImpl implements ClassifierService {
     @Override
     public Classifier getActiveClassifier() {
         return classifierRepository.getClassifierByActiveClassifierIsTrue();
+    }
+
+    @Override
+    public void submitNewTraining() {
+        eggplantTrainingProducer.submitNewTraining();
     }
 
     @Override

@@ -22,6 +22,8 @@ public interface ClassifierService {
 
     Classifier getActiveClassifier();
 
+    void submitNewTraining();
+
     void deleteById(String id);
 
     // TODO Add something to manage number of prediction
