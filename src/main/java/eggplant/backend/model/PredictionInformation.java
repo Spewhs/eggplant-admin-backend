@@ -1,0 +1,69 @@
+package eggplant.backend.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+
+@Document("prediction")
+public class PredictionInformation {
+
+    @Id
+    private String id;
+
+    private List<Prediction> predictions;
+
+    private String classifierId;
+
+    private String zucchiniId;
+
+    private String scenarioId;
+
+    public PredictionInformation(
+            List<Prediction> predictions,
+            String classifierId,
+            String zucchiniId,
+            String scenarioId
+    ) {
+        this.predictions = predictions;
+        this.classifierId = classifierId;
+        this.zucchiniId = zucchiniId;
+        this.scenarioId = scenarioId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<Prediction> getPredictions() {
+        return predictions;
+    }
+
+    public void setPredictions(List<Prediction> predictions) {
+        this.predictions = predictions;
+    }
+
+    public String getClassifierId() {
+        return classifierId;
+    }
+
+    public void setClassifierId(String classifierId) {
+        this.classifierId = classifierId;
+    }
+
+    public String getZucchiniId() {
+        return zucchiniId;
+    }
+
+    public void setZucchiniId(String zucchiniId) {
+        this.zucchiniId = zucchiniId;
+    }
+
+    public String getScenarioId() {
+        return scenarioId;
+    }
+
+    public void setScenarioId(String scenarioId) {
+        this.scenarioId = scenarioId;
+    }
+}
