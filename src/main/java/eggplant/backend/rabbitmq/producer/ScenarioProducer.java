@@ -2,7 +2,7 @@ package eggplant.backend.rabbitmq.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eggplant.backend.configuration.RabbitMqConfiguration;
+import eggplant.backend.configuration.rabbitMq.ZucchiniQueueConfiguration;
 import eggplant.backend.model.Scenario;
 import eggplant.backend.service.ScenarioService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -31,7 +31,7 @@ public class ScenarioProducer {
             return;
         }
         rabbitTemplate.convertAndSend(
-                RabbitMqConfiguration.ZUCCHINI_INCOMING_EXCHANGE,
+                ZucchiniQueueConfiguration.ZUCCHINI_INCOMING_EXCHANGE,
                 "scenario",
                 message
         );
