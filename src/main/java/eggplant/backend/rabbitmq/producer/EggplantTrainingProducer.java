@@ -1,5 +1,6 @@
 package eggplant.backend.rabbitmq.producer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eggplant.backend.configuration.rabbitMq.TrainingQueueConfiguration;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ public class EggplantTrainingProducer {
         rabbitTemplate.convertAndSend(
                 TrainingQueueConfiguration.EGGPLANT_SUBMIT_TRAINING_EXCHANGE,
                 TrainingQueueConfiguration.TRAIN_ROUTING_KEY,
-                new Object()
+                //new ObjectMapper().writeValueAsString(new Object())
+                "{}"
         );
     }
 }

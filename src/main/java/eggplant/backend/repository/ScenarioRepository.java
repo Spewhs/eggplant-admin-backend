@@ -20,4 +20,5 @@ public interface ScenarioRepository extends MongoRepository<Scenario, String> {
     List<Scenario> findByScenarioKey(String scenarioKey);
 
     Slice<Scenario> findByUsedInDatasetIsTrue(Pageable pageable);
+
 }

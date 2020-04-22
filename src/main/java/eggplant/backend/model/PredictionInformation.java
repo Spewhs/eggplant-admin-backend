@@ -66,4 +66,16 @@ public class PredictionInformation {
     public void setScenarioId(String scenarioId) {
         this.scenarioId = scenarioId;
     }
+
+    public String getPrediction() {
+        String label = "";
+        float accuracy = -1;
+        for (Prediction prediction : predictions) {
+            if (prediction.getAccuracy() > accuracy) {
+                accuracy = prediction.getAccuracy();
+                label = prediction.getLabel();
+            }
+        }
+        return label;
+    }
 }

@@ -24,7 +24,7 @@ public class EggplantPredictionProducer {
 
     public void submitPrediction(Scenario scenario) throws JsonProcessingException {
 
-        Classifier activeClassifier =classifierService.getActiveClassifier();
+        Classifier activeClassifier = classifierService.getActiveClassifier();
 
         submitPrediction(scenario, activeClassifier.getId());
     }

@@ -10,6 +10,7 @@ import eggplant.backend.model.Classifier;
 import eggplant.backend.service.ClassifierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -36,8 +37,9 @@ public class ClassifierController {
     }
 
     @PostMapping(value = basePath + "/train")
-    public void submitTraining(){
+    public String submitTraining(){
         classifierService.submitNewTraining();
+        return "{}";
     }
 
     @GetMapping(value = basePath + "/version/{version}")
