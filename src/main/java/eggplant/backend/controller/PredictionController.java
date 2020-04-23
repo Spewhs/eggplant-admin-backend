@@ -1,8 +1,10 @@
 package eggplant.backend.controller;
 
+import eggplant.backend.dto.ObjectPage;
 import eggplant.backend.model.PredictionInformation;
 import eggplant.backend.service.PredictionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,33 +32,64 @@ public class PredictionController {
     }
 
     @GetMapping(value = basePath)
-    public List<PredictionInformation> getPrediction(
+    public ObjectPage<PredictionInformation> getPrediction(
             @RequestParam(value = "page", defaultValue = "0") Integer page
     ) {
-        return predictionService.getPrediction(page, pageSize);
+        Page<PredictionInformation> pagePrediction = predictionService.getPrediction(
+                page,
+                pageSize
+        );
+        return new ObjectPage<>(
+                pagePrediction.getContent(),
+                (int) pagePrediction.getTotalElements()
+        );
     }
 
     @GetMapping(value = basePath + "/zucchini/{zucchiniId}")
-    public List<PredictionInformation> getByZucchiniId(
+    public ObjectPage<PredictionInformation> getByZucchiniId(
             @PathVariable String zucchiniId,
             @RequestParam(value = "page", defaultValue = "0") Integer page
     ) {
-        return predictionService.getPredictionByZucchiniId(zucchiniId, page, pageSize);
+        Page<PredictionInformation> pagePrediction = predictionService.getPredictionByZucchiniId(
+                zucchiniId,
+                page,
+                pageSize
+        );
+        return new ObjectPage<>(
+                pagePrediction.getContent(),
+                (int) pagePrediction.getTotalElements()
+        );
     }
 
     @GetMapping(value = basePath + "/scenario/{scenarioId}")
-    public List<PredictionInformation> getByScenarioId(
+    public ObjectPage<PredictionInformation> getByScenarioId(
             @PathVariable String scenarioId,
             @RequestParam(value = "page", defaultValue = "0") Integer page
     ) {
-        return predictionService.getPredictionByScenarioId(scenarioId, page, pageSize);
+        Page<PredictionInformation> pagePrediction = predictionService.getPredictionByScenarioId(
+                scenarioId,
+                page,
+                pageSize
+        );
+        return new ObjectPage<>(
+                pagePrediction.getContent(),
+                (int) pagePrediction.getTotalElements()
+        );
     }
 
     @GetMapping(value = basePath + "/classifier/{classifierId}")
-    public List<PredictionInformation> getByClassifierId(
+    public ObjectPage<PredictionInformation> getByClassifierId(
             @PathVariable String classifierId,
             @RequestParam(value = "page", defaultValue = "0") Integer page
     ) {
-        return predictionService.getPredictionByClassifier(classifierId, page, pageSize);
+        Page<PredictionInformation> pagePrediction =  predictionService.getPredictionByClassifier(
+                classifierId,
+                page,
+                pageSize
+        );
+        return new ObjectPage<>(
+                pagePrediction.getContent(),
+                (int) pagePrediction.getTotalElements()
+        );
     }
 }

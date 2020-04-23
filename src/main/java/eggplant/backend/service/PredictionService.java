@@ -1,8 +1,8 @@
 package eggplant.backend.service;
 
 import eggplant.backend.model.PredictionInformation;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 public interface PredictionService {
 
@@ -10,13 +10,13 @@ public interface PredictionService {
 
     void submitPrediction(String scenarioId);
 
-    List<PredictionInformation> getPrediction(Integer page, Integer pageSize);
+    Page<PredictionInformation> getPrediction(Integer page, Integer pageSize);
 
-    List<PredictionInformation> getPredictionByClassifier(String classifierId, Integer page, Integer pageSize);
+    Page<PredictionInformation> getPredictionByClassifier(String classifierId, Integer page, Integer pageSize);
 
-    List<PredictionInformation> getPredictionByScenarioId(String scenarioId, Integer page, Integer pageSize);
+    Page<PredictionInformation> getPredictionByScenarioId(String scenarioId, Integer page, Integer pageSize);
 
-    List<PredictionInformation> getPredictionByZucchiniId(String zucchiniId, Integer page, Integer pageSize);
+    Page<PredictionInformation> getPredictionByZucchiniId(String zucchiniId, Integer page, Integer pageSize);
 
     boolean isWellPredict(String scenarioId, String classifierId);
 

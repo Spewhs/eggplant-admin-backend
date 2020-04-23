@@ -8,6 +8,7 @@ import eggplant.backend.rabbitmq.producer.EggplantPredictionProducer;
 import eggplant.backend.repository.PredictionInformationRepository;
 import eggplant.backend.repository.ScenarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
@@ -54,12 +55,12 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     @Override
-    public List<PredictionInformation> getPrediction(Integer page, Integer pageSize) {
-        return predictionInformationRepository.findAll(PageRequest.of(page, page + pageSize)).getContent();
+    public Page<PredictionInformation> getPrediction(Integer page, Integer pageSize) {
+        return predictionInformationRepository.findAll(PageRequest.of(page, page + pageSize));
     }
 
     @Override
-    public List<PredictionInformation> getPredictionByClassifier(String classifierId, Integer page, Integer pageSize) {
+    public Page<PredictionInformation> getPredictionByClassifier(String classifierId, Integer page, Integer pageSize) {
         return predictionInformationRepository.getByClassifierId(
                 classifierId,
                 PageRequest.of(page, page + pageSize)
@@ -67,7 +68,7 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     @Override
-    public List<PredictionInformation> getPredictionByScenarioId(String scenarioId, Integer page, Integer pageSize) {
+    public Page<PredictionInformation> getPredictionByScenarioId(String scenarioId, Integer page, Integer pageSize) {
         return predictionInformationRepository.getByScenarioId(
                 scenarioId,
                 PageRequest.of(page, page + pageSize)
@@ -75,7 +76,7 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     @Override
-    public List<PredictionInformation> getPredictionByZucchiniId(String zucchiniId, Integer page, Integer pageSize) {
+    public Page<PredictionInformation> getPredictionByZucchiniId(String zucchiniId, Integer page, Integer pageSize) {
         return predictionInformationRepository.getByZucchiniId(
                 zucchiniId,
                 PageRequest.of(page, page + pageSize)
