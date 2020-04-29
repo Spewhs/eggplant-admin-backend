@@ -92,6 +92,7 @@ public class ClassifierController {
                 Optional.ofNullable(request.getTrainingAccuracy()),
                 Optional.ofNullable(request.getInterestingWords()),
                 Optional.ofNullable(request.getGoodPrediction()),
+                Optional.ofNullable(request.getTotalLabeledPrediction()),
                 Optional.ofNullable(request.getTotalPrediction())
         );
         return classifierService.updateClassifier(params);

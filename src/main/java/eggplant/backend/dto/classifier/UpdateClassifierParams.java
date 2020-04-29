@@ -16,6 +16,8 @@ public class UpdateClassifierParams {
 
     private Optional<Integer> goodPrediction;
 
+    private Optional<Integer> totalLabeledPrediction;
+
     private Optional<Integer> totalPrediction;
 
     public UpdateClassifierParams() {
@@ -27,6 +29,7 @@ public class UpdateClassifierParams {
             Optional<Float> trainingAccuracy,
             Optional<List<String>> interestingWords,
             Optional<Integer> goodPrediction,
+            Optional<Integer> totalLabeledPrediction,
             Optional<Integer> totalPrediction
     ) {
         this.id = id;
@@ -34,6 +37,7 @@ public class UpdateClassifierParams {
         this.trainingAccuracy = trainingAccuracy;
         this.interestingWords = interestingWords;
         this.goodPrediction = goodPrediction;
+        this.totalLabeledPrediction = totalLabeledPrediction;
         this.totalPrediction = totalPrediction;
     }
 
@@ -82,5 +86,13 @@ public class UpdateClassifierParams {
 
     public void setTotalPrediction(Optional<Integer> totalPrediction) {
         this.totalPrediction = totalPrediction;
+    }
+
+    public Optional<Integer> getTotalLabeledPrediction() {
+        return totalLabeledPrediction;
+    }
+
+    public void setTotalLabeledPrediction(Optional<Integer> totalLabeledPrediction) {
+        this.totalLabeledPrediction = totalLabeledPrediction;
     }
 }

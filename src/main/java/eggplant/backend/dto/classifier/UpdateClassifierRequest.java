@@ -19,6 +19,8 @@ public class UpdateClassifierRequest {
 
     private Integer goodPrediction;
 
+    private Integer totalLabeledPrediction;
+
     private Integer totalPrediction;
 
     public UpdateClassifierRequest() {
@@ -30,6 +32,7 @@ public class UpdateClassifierRequest {
             Float trainingAccuracy,
             List<String> interestingWords,
             Integer goodPrediction,
+            Integer totalLabeledPrediction,
             Integer totalPrediction
     ) {
         this.id = id;
@@ -37,6 +40,7 @@ public class UpdateClassifierRequest {
         this.trainingAccuracy = trainingAccuracy;
         this.interestingWords = interestingWords;
         this.goodPrediction = goodPrediction;
+        this.totalLabeledPrediction = totalLabeledPrediction;
         this.totalPrediction = totalPrediction;
     }
 
@@ -86,5 +90,13 @@ public class UpdateClassifierRequest {
 
     public void setTotalPrediction(Integer totalPrediction) {
         this.totalPrediction = totalPrediction;
+    }
+
+    public Integer getTotalLabeledPrediction() {
+        return totalLabeledPrediction;
+    }
+
+    public void setTotalLabeledPrediction(Integer totalLabeledPrediction) {
+        this.totalLabeledPrediction = totalLabeledPrediction;
     }
 }

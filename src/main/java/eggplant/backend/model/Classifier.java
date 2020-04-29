@@ -1,5 +1,6 @@
 package eggplant.backend.model;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,9 +24,13 @@ public class Classifier {
 
     private Integer goodPrediction;
 
+    private Integer totalLabeledPrediction;
+
     private Integer totalPrediction;
 
     private boolean activeClassifier;
+
+    private Binary model;
 
     public Classifier() { }
 
@@ -53,6 +58,14 @@ public class Classifier {
 
     public String getVersion() {
         return version;
+    }
+
+    public Integer getTotalLabeledPrediction() {
+        return totalLabeledPrediction;
+    }
+
+    public void setTotalLabeledPrediction(Integer totalLabeledPrediction) {
+        this.totalLabeledPrediction = totalLabeledPrediction;
     }
 
     public void setVersion(String version) {

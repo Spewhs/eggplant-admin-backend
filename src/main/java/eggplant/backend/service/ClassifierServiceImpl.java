@@ -95,6 +95,7 @@ public class ClassifierServiceImpl implements ClassifierService {
                 .orElseThrow(CantActiveClassifier::new);
 
         Classifier oldActiveClassifier = classifierRepository.getClassifierByActiveClassifierIsTrue();
+
         if (oldActiveClassifier != null) {
             oldActiveClassifier.setActiveClassifier(false);
             classifierRepository.save(oldActiveClassifier);
