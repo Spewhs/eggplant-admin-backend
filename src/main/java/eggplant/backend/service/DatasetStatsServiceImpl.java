@@ -1,7 +1,6 @@
 package eggplant.backend.service;
 
 import eggplant.backend.dto.stats.NewEntryInDataset;
-import eggplant.backend.exception.NoDocument;
 import eggplant.backend.model.DatasetStats;
 import eggplant.backend.repository.DatasetStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,21 @@ public class DatasetStatsServiceImpl implements DatasetStatsService {
     @Override
     public DatasetStats getDatasetStatistics() {
         List<DatasetStats> stats = datasetStatsRepository.findAll();
-        if (stats.size() <= 0) throw new NoDocument();
-        return stats.get(0);
+        DatasetStats datasetStats;
+        if (stats.size() <= 0) {
+            datasetStats = new DatasetStats(
+                    0,
+                    new HashMap<>(),
+                    new HashMap<>(),
+                    new HashMap<>(),
+                    new HashMap<>(new HashMap<>()),
+                    ZonedDateTime.now()
+            );
+            datasetStatsRepository.insert(datasetStats);
+        } else {
+            datasetStats = stats.get(0);
+        }
+        return datasetStats;
     }
 
     @Override

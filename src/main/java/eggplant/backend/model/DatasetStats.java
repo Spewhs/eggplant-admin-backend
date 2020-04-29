@@ -29,7 +29,6 @@ public class DatasetStats {
     public DatasetStats() { }
 
     public DatasetStats(
-            String id,
             Integer datasetSize,
             HashMap<String, Integer> errorsDistribution,
             HashMap<String, Integer> correctionActionDistribution,
@@ -37,7 +36,6 @@ public class DatasetStats {
             HashMap<String, HashMap<String, Integer>> correctionErrorAggregation,
             ZonedDateTime updatedAt
     ) {
-        this.id = id;
         this.datasetSize = datasetSize;
         this.errorsDistribution = errorsDistribution;
         this.correctionActionDistribution = correctionActionDistribution;
