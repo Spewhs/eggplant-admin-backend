@@ -30,13 +30,14 @@ public class EggplantPredictionProducer {
     }
 
     public void submitPrediction(Scenario scenario, String classifierId) throws JsonProcessingException {
-
         SubmitPrediction submitPrediction = new SubmitPrediction(
                 scenario.getId(),
                 classifierId,
                 scenario.getTrace(),
                 scenario.getFailStepKeyWord(),
-                scenario.getZucchiniId()
+                scenario.getZucchiniId(),
+                scenario.getTestRunId(),
+                scenario.getScenarioKey()
         );
 
         rabbitTemplate.convertAndSend(

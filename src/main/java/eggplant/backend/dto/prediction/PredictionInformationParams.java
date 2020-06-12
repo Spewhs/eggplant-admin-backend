@@ -19,6 +19,14 @@ public class PredictionInformationParams {
     @JsonProperty("scenarioId")
     private String scenarioId;
 
+    @JsonProperty("scenarioKey")
+    private String scenarioKey;
+
+    @JsonProperty("testRunId")
+    private String testRunId;
+
+
+
     public PredictionInformationParams() {
     }
 
@@ -26,12 +34,16 @@ public class PredictionInformationParams {
             List<Prediction> predictions,
             String classifierId,
             String zucchiniId,
-            String scenarioId
+            String scenarioId,
+            String scenarioKey,
+            String testRunId
     ) {
         this.predictions = predictions;
         this.classifierId = classifierId;
         this.zucchiniId = zucchiniId;
         this.scenarioId = scenarioId;
+        this.scenarioKey = scenarioKey;
+        this.testRunId = testRunId;
     }
 
     public List<Prediction> getPredictions() {
@@ -64,5 +76,21 @@ public class PredictionInformationParams {
 
     public void setScenarioId(String scenarioId) {
         this.scenarioId = scenarioId;
+    }
+
+    public String getScenarioKey() {
+        return scenarioKey;
+    }
+
+    public void setScenarioKey(String scenarioKey) {
+        this.scenarioKey = scenarioKey;
+    }
+
+    public String getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(String testRunId) {
+        this.testRunId = testRunId;
     }
 }

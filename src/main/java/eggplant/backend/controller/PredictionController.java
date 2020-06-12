@@ -18,7 +18,7 @@ public class PredictionController {
     private PredictionService predictionService;
 
     @PostMapping(value = basePath + "/{scenarioId}")
-    public void submitPrediction(
+    public String submitPrediction(
             @PathVariable String scenarioId,
             @RequestParam(value = "classifierId", defaultValue = "") String classifierId
     ) {
@@ -27,6 +27,7 @@ public class PredictionController {
         } else {
             predictionService.submitPrediction(scenarioId, classifierId);
         }
+        return "{}";
     }
 
     @GetMapping(value = basePath)

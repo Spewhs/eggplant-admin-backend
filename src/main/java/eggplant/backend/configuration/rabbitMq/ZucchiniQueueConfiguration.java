@@ -31,7 +31,10 @@ public class ZucchiniQueueConfiguration {
     }
 
     @Bean
-    public Binding scenarioBinding(Queue scenarioQueue, TopicExchange scenarioExchange) {
+    public Binding scenarioBinding(
+            Queue scenarioQueue,
+            TopicExchange scenarioExchange
+    ) {
         return BindingBuilder.bind(scenarioQueue).to(scenarioExchange).with(NEW_SCENARIO_ROUTING_KEY);
     }
 

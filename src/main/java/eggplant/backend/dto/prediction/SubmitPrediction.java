@@ -12,18 +12,26 @@ public class SubmitPrediction {
 
     private String zucchiniId;
 
+    private String testRunId;
+
+    private String scenarioKey;
+
     public SubmitPrediction(
             String id,
             String classifierId,
             String trace,
             String failStepKeyWord,
-            String zucchiniId
+            String zucchiniId,
+            String testRunId,
+            String scenarioKey
     ) {
         this.id = id;
         this.classifierId = classifierId;
         this.trace = trace;
         this.failStepKeyWord = failStepKeyWord;
         this.zucchiniId = zucchiniId;
+        this.testRunId = testRunId;
+        this.scenarioKey = scenarioKey;
     }
 
     public String getId() {
@@ -64,5 +72,21 @@ public class SubmitPrediction {
 
     public void setZucchiniId(String zucchiniId) {
         this.zucchiniId = zucchiniId;
+    }
+
+    public String getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(String testRunId) {
+        this.testRunId = testRunId;
+    }
+
+    public String getScenarioKey() {
+        return scenarioKey;
+    }
+
+    public void setScenarioKey(String scenarioKey) {
+        this.scenarioKey = scenarioKey;
     }
 }

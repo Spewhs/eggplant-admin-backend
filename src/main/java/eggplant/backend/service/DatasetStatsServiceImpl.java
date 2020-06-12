@@ -1,6 +1,6 @@
 package eggplant.backend.service;
 
-import eggplant.backend.dto.stats.NewEntryInDataset;
+import eggplant.backend.dto.stats.EntryInDatasetStats;
 import eggplant.backend.model.DatasetStats;
 import eggplant.backend.repository.DatasetStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +38,13 @@ public class DatasetStatsServiceImpl implements DatasetStatsService {
     }
 
     @Override
-    public void addNewEntry(NewEntryInDataset newEntryInDataset) {
+    public void addNewEntry(EntryInDatasetStats entryInDatasetStats) {
         DatasetStats datasetStats = getDatasetStatistics();
 
-        datasetStats = updateErrorsDistribution(datasetStats, newEntryInDataset);
-        datasetStats = updateFailStepKeyword(datasetStats, newEntryInDataset);
-        datasetStats = updateCorrectionAction(datasetStats, newEntryInDataset);
-        datasetStats = updateCorrectionErrorAggregation(datasetStats, newEntryInDataset);
+        datasetStats = updateErrorsDistribution(datasetStats, entryInDatasetStats);
+        datasetStats = updateFailStepKeyword(datasetStats, entryInDatasetStats);
+        datasetStats = updateCorrectionAction(datasetStats, entryInDatasetStats);
+        datasetStats = updateCorrectionErrorAggregation(datasetStats, entryInDatasetStats);
 
         ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
         datasetStats.setUpdatedAt(now);
@@ -52,9 +52,24 @@ public class DatasetStatsServiceImpl implements DatasetStatsService {
         datasetStatsRepository.insert(datasetStats);
     }
 
-    private DatasetStats updateErrorsDistribution(DatasetStats datasetStats, NewEntryInDataset newEntryInDataset) {
+    @Override
+    public void updateDataset(EntryInDatasetStats oldEntryInDataset, EntryInDatasetStats newEntryInDatasetStats) {
+        DatasetStats datasetStats = getDatasetStatistics();
+
+        datasetStats.getErrorsDistribution().put(
+                oldEntryInDataset.getTrainingLabel(),
+                datasetStats.getErrorsDistribution().get(oldEntryInDataset.getTrainingLabel()) - 1
+        );
+
+        datasetStats.setDatasetSize(datasetStats.getDatasetSize() - 1);
+
+
+        addNewEntry(newEntryInDatasetStats);
+    }
+
+    private DatasetStats updateErrorsDistribution(DatasetStats datasetStats, EntryInDatasetStats entryInDatasetStats) {
         HashMap<String, Integer> errorsDistribution = datasetStats.getErrorsDistribution();
-        String error = newEntryInDataset.getTrainingLabel();
+        String error = entryInDatasetStats.getTrainingLabel();
 
         if (!errorsDistribution.containsKey(error)) {
             errorsDistribution.put(error, 0);
@@ -68,9 +83,9 @@ public class DatasetStatsServiceImpl implements DatasetStatsService {
         return datasetStats;
     }
 
-    private DatasetStats updateFailStepKeyword(DatasetStats datasetStats, NewEntryInDataset newEntryInDataset) {
+    private DatasetStats updateFailStepKeyword(DatasetStats datasetStats, EntryInDatasetStats entryInDatasetStats) {
         HashMap<String, Integer> failStepDistribution = datasetStats.getFailStepKeyWordDistribution();
-        String failStepKeyword = newEntryInDataset.getFailStepKeyword();
+        String failStepKeyword = entryInDatasetStats.getFailStepKeyword();
 
         if(!failStepDistribution.containsKey(failStepKeyword)) {
             failStepDistribution.put(failStepKeyword, 0);
@@ -84,9 +99,9 @@ public class DatasetStatsServiceImpl implements DatasetStatsService {
         return datasetStats;
     }
 
-    private DatasetStats updateCorrectionAction(DatasetStats datasetStats, NewEntryInDataset newEntryInDataset) {
+    private DatasetStats updateCorrectionAction(DatasetStats datasetStats, EntryInDatasetStats entryInDatasetStats) {
         HashMap<String, Integer> correctionActionDistribution = datasetStats.getCorrectionActionDistribution();
-        String correctionAction = newEntryInDataset.getCorrectionAction();
+        String correctionAction = entryInDatasetStats.getCorrectionAction();
 
         if (!correctionActionDistribution.containsKey(correctionAction)) {
             correctionActionDistribution.put(correctionAction, 1);
@@ -100,9 +115,9 @@ public class DatasetStatsServiceImpl implements DatasetStatsService {
         return datasetStats;
     }
 
-    private DatasetStats updateCorrectionErrorAggregation(DatasetStats datasetStats, NewEntryInDataset newEntryInDataset) {
-        String error = newEntryInDataset.getTrainingLabel();
-        String correctionAction = newEntryInDataset.getCorrectionAction();
+    private DatasetStats updateCorrectionErrorAggregation(DatasetStats datasetStats, EntryInDatasetStats entryInDatasetStats) {
+        String error = entryInDatasetStats.getTrainingLabel();
+        String correctionAction = entryInDatasetStats.getCorrectionAction();
         HashMap<String, HashMap<String, Integer>> correctionErrorAggregation = datasetStats.getCorrectionErrorAggregation();
 
         if (!correctionErrorAggregation.containsKey(error)) {

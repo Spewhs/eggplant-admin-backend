@@ -52,6 +52,7 @@ public class ScenarioServiceImpl implements ScenarioService {
         Scenario scenario = new Scenario(
                 params.getZucchiniId(),
                 params.getTrace(),
+                params.getTestRunId(),
                 params.getTrainingLabel().orElse(""),
                 params.getCorrectionAction().orElse(""),
                 params.getScenarioKey(),

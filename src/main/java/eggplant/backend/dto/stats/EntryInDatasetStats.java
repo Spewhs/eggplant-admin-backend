@@ -1,6 +1,6 @@
 package eggplant.backend.dto.stats;
 
-public class NewEntryInDataset {
+public class EntryInDatasetStats {
 
     private String trainingLabel;
 
@@ -8,7 +8,7 @@ public class NewEntryInDataset {
 
     private String failStepKeyword;
 
-    public NewEntryInDataset(
+    public EntryInDatasetStats(
             String trainingLabel,
             String correctionAction,
             String failStepKeyword

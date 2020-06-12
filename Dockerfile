@@ -12,7 +12,7 @@ RUN gradle build --no-daemon
 #### Stage 2: Run the application
 FROM openjdk:11-jre-slim
 
-EXPOSE 8080
+EXPOSE 8082
 
 RUN mkdir /app
 

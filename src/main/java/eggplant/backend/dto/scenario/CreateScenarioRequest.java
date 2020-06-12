@@ -8,6 +8,8 @@ public class CreateScenarioRequest {
 
     private String zucchiniId;
 
+    private String testRunId;
+
     private String trace;
 
     private String trainingLabel;
@@ -23,6 +25,7 @@ public class CreateScenarioRequest {
 
     public CreateScenarioRequest(
             String zucchiniId,
+            String testRunId,
             String trace,
             String trainingLabel,
             String correctionAction,
@@ -30,6 +33,7 @@ public class CreateScenarioRequest {
             String failStepKeyWord
     ) {
         this.zucchiniId = zucchiniId;
+        this.testRunId = testRunId;
         this.trace = trace;
         this.trainingLabel = trainingLabel;
         this.correctionAction = correctionAction;
@@ -43,6 +47,14 @@ public class CreateScenarioRequest {
 
     public void setZucchiniId(String zucchiniId) {
         this.zucchiniId = zucchiniId;
+    }
+
+    public String getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(String testRunId) {
+        this.testRunId = testRunId;
     }
 
     public String getTrace() {

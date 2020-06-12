@@ -9,7 +9,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ZucchiniScenario {
 
-    @JsonProperty("_id")
+    @JsonProperty("id")
     private String id;
 
     private String scenarioKey;
@@ -20,16 +20,21 @@ public class ZucchiniScenario {
     @JsonProperty("steps")
     private List<Step> steps;
 
+    @JsonProperty("testRunId")
+    private String testRunId;
+
     public ZucchiniScenario() {}
 
     public ZucchiniScenario(
             String id,
             String scenarioKey,
+            String testRunId,
             Analysis analysis,
             List<Step> steps
     ) {
         this.id = id;
         this.scenarioKey = scenarioKey;
+        this.testRunId = testRunId;
         this.analysis = analysis;
         this.steps = steps;
     }
@@ -46,14 +51,18 @@ public class ZucchiniScenario {
         if (analysis == null) {
             return null;
         }
-        return analysis.getAction();
+        return analysis.getResult();
     }
 
     public String getCorrectionAction() {
         if (analysis == null) {
             return null;
         }
-        return analysis.getResult();
+        return analysis.getAction();
+    }
+
+    public String getTestRunId() {
+        return testRunId;
     }
 
     public String getFailStepKeyWord() {

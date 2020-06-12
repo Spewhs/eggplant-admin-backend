@@ -81,6 +81,7 @@ public class ScenarioController {
     ) {
         CreateScenarioParams params = new CreateScenarioParams(
                 request.getZucchiniId(),
+                request.getTestRunId(),
                 request.getTrace(),
                 Optional.of(request.getTrainingLabel()),
                 Optional.of(request.getCorrectionAction()),

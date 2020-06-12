@@ -14,6 +14,8 @@ public class Scenario {
 
     private String zucchiniId;
 
+    private String testRunId;
+
     private String trace;
 
     private String trainingLabel;
@@ -33,6 +35,7 @@ public class Scenario {
     public Scenario(
             String zucchiniId,
             String trace,
+            String testRunId,
             String trainingLabel,
             String correctionAction,
             String scenarioKey,
@@ -42,6 +45,7 @@ public class Scenario {
     ) {
         this.zucchiniId = zucchiniId;
         this.trace = trace;
+        this.testRunId = testRunId;
         this.trainingLabel = trainingLabel;
         this.correctionAction = correctionAction;
         this.scenarioKey = scenarioKey;
@@ -64,6 +68,14 @@ public class Scenario {
 
     public String getTrace() {
         return trace;
+    }
+
+    public String getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(String testRunId) {
+        this.testRunId = testRunId;
     }
 
     public void setTrace(String trace) {

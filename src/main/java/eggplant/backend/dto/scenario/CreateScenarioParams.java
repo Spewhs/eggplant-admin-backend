@@ -16,8 +16,11 @@ public class CreateScenarioParams {
 
     private String failStepKeyWord;
 
+    private String testRunId;
+
     public CreateScenarioParams(
             String zucchiniId,
+            String testRunId,
             String trace,
             Optional<String> trainingLabel,
             Optional<String> correctionAction,
@@ -25,6 +28,7 @@ public class CreateScenarioParams {
             String failStepKeyWord
     ) {
         this.zucchiniId = zucchiniId;
+        this.testRunId = testRunId;
         this.trace = trace;
         this.trainingLabel = trainingLabel;
         this.correctionAction = correctionAction;
@@ -38,6 +42,14 @@ public class CreateScenarioParams {
 
     public void setZucchiniId(String zucchiniId) {
         this.zucchiniId = zucchiniId;
+    }
+
+    public String getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(String testRunId) {
+        this.testRunId = testRunId;
     }
 
     public String getTrace() {
