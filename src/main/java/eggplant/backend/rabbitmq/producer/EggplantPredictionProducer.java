@@ -2,10 +2,8 @@ package eggplant.backend.rabbitmq.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eggplant.backend.configuration.rabbitMq.TrainingQueueConfiguration;
 import eggplant.backend.configuration.rabbitMq.SubmitPredictionQueueConfiguration;
 import eggplant.backend.dto.prediction.SubmitPrediction;
-import eggplant.backend.dto.rabbitmq.EggplantAdministration;
 import eggplant.backend.model.Classifier;
 import eggplant.backend.model.Scenario;
 import eggplant.backend.service.ClassifierService;

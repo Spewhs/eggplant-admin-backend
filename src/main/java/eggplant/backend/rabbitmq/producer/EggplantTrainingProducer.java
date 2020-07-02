@@ -1,6 +1,6 @@
 package eggplant.backend.rabbitmq.producer;
 
-import eggplant.backend.configuration.rabbitMq.TrainingQueueConfiguration;
+import eggplant.backend.configuration.rabbitMq.SubmitTrainingQueueConfiguration;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,8 +13,8 @@ public class EggplantTrainingProducer {
 
     public void submitNewTraining() {
         rabbitTemplate.convertAndSend(
-                TrainingQueueConfiguration.EGGPLANT_SUBMIT_TRAINING_EXCHANGE,
-                TrainingQueueConfiguration.TRAIN_ROUTING_KEY,
+                SubmitTrainingQueueConfiguration.EGGPLANT_SUBMIT_TRAINING_EXCHANGE,
+                SubmitTrainingQueueConfiguration.TRAIN_ROUTING_KEY,
                 "{}"
         );
     }

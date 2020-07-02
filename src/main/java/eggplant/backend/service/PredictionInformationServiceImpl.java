@@ -61,6 +61,7 @@ public class PredictionInformationServiceImpl implements PredictionInformationSe
         }
         totalPrediction++;
         String pred = predictionInformation.getPrediction();
+        String label = scenario.getTrainingLabel();
         UpdateClassifierParams params = new UpdateClassifierParams(
                 classifier.getId(),
                 Optional.ofNullable(classifier.getVersion()),
