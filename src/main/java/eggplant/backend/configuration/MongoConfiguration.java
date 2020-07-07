@@ -1,6 +1,9 @@
 package eggplant.backend.configuration;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import eggplant.backend.utils.ZonedDateTimeReadConverter;
 import eggplant.backend.utils.ZonedDateTimeWriteConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,11 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.convert.CustomConversions;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
-import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 import static java.util.Arrays.asList;
 
@@ -28,9 +27,19 @@ public class MongoConfiguration extends AbstractMongoConfiguration {
     @Value("${spring.data.mongodb.port}")
     private int port;
 
+    @Value("${spring.data.mongodb.username}")
+    private String username;
+
+    @Value("${spring.data.mongodb.password}")
+    private char[] password;
+
     @Override
     public MongoClient mongoClient() {
-        return new MongoClient(host, port);
+        return new MongoClient(
+                new ServerAddress(host, port),
+                MongoCredential.createCredential(username, database, password),
+                MongoClientOptions.builder().build()
+                );
     }
 
     @Override
