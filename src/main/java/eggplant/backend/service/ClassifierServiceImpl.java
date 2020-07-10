@@ -44,13 +44,19 @@ public class ClassifierServiceImpl implements ClassifierService {
 
     @Override
     public Classifier getById(String id) {
-        Classifier classifier = classifierRepository.findById(id)
+        return classifierRepository.findById(id)
                 .orElseThrow(NoDocument::new);
-        return classifier;
     }
 
     @Override
     public Classifier createNewClassifier(CreateClassifierParams params) {
+        if (params.getVersion().isPresent()) {
+            try {
+                Classifier classifier = getById(params.getVersion().get());
+                return classifier;
+            } catch (NoDocument ignored) {}
+        }
+
         String  version = "";
         if (params.getVersion().isEmpty()) {
             version = "" + (classifierRepository.findAll().size() + 1);
