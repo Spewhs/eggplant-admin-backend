@@ -7,7 +7,11 @@ ARG APPLICATION_PROPERTIES
 
 COPY ${APPLICATION_PROPERTIES} src/main/resources/application.properties
 
+RUN echo ${APPLICATION_PROPERTIES}
+
 WORKDIR /home/gradle/src
+
+RUN cat src/main/resources/application.properties
 
 RUN gradle build --no-daemon
 
